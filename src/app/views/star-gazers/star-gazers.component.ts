@@ -174,9 +174,9 @@ export class StarGazersComponent implements OnInit {
         this.inputUsername = username;
         this.fetchUserData(username);
         return;
+      } else if( username !== '' ) {
+        Materialize.toast('O usuário informado não é válido.', 4000);
       }
-
-      Materialize.toast('O usuário informado não é válido.', 4000);
     });
 
     this.fetchApiRatingLimits();
