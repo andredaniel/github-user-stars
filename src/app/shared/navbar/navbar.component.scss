@@ -1,0 +1,147 @@
+@import './src/assets/styles/component_imports';
+
+.navbar-fixed {
+  
+  nav {
+    padding-right: 35px;
+    padding-left: 20px;
+  }
+  
+  .brand-logo {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 16px;
+    
+    i.fa {
+      font-size: 2em;
+    }
+  }
+  .search-wrapper {
+    position: relative;
+    
+    i.fa {
+      position: absolute;
+      margin-left: 20px;
+      opacity: 0.2;
+    }
+    
+    .input-username {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-bottom: none;
+      border-radius: 2px;
+      text-align: center;
+      margin: 0;
+      &:focus {
+        border-bottom: none;
+        box-shadow: none;
+      }
+    }
+  }
+  
+  .btn {
+    height: 44px;
+  }
+  .progress {
+    position: absolute;
+    border-radius: 0;
+    height: 5px;
+    width: 100%;
+    bottom: -5px;
+    right: 0;
+    left: 0;
+    margin: 0;
+    overflow: visible;
+    
+    .determinate {
+      transition: width 2000ms cubic-bezier(.4,0,.02,1);
+      position: relative;
+      height: 100%;
+    }
+    
+    .remaining {
+      background-color: $green;
+      transform: translateX(50%);
+      text-transform: uppercase;
+      line-height: 1.4em;
+      position: absolute;
+      border-radius: 3px;
+      padding: 2px 12px;
+      text-align: center;
+      font-size: 12px;
+      right: 3px;
+      top: 15px;
+
+      &:after {
+        content: '';
+        transform: rotate(45deg) translateX(-50%);
+        background-color: $green;
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        z-index: -1;
+        left: 50%;
+        top: 0;
+      }
+      
+      span {
+        white-space: nowrap;
+        display: block;
+
+        &:last-child {
+          text-transform: none;
+          opacity: 0.7;
+        }
+      }
+
+      &.start,
+      &.end {
+        transform: translateX(0);
+      }
+      &.start {
+        right: auto;
+        left: 5px;
+        &:after {
+          left: 10px;
+          right: auto;
+        }
+      }
+      &.end {
+        right: 5px;
+        &:after {
+          right: 10px;
+          left: auto;
+        }
+      }
+    }
+  }
+}
+
+:host /deep/ .select-languages {
+  padding-right: 40px;
+  position: relative;
+  width: 230px;
+  i.material-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .select-wrapper {
+    span.caret {
+      display: none;
+    }
+    input.select-dropdown {
+      padding: 10px 15px 10px 40px;
+      text-overflow: ellipsis;
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .dropdown-content {
+      li {
+        position: relative;
+        label {
+          top: -10px;
+        }
+      }
+    }
+  }
+}

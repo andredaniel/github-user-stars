@@ -1,0 +1,119 @@
+@import './src/assets/styles/component_imports';
+
+.card {
+  .card-content {
+    text-align: center;
+    position: relative;
+  }
+
+  .card-action {
+    clear: both;
+
+    a.action-button {
+      border: 1px solid $medium-gray;
+      transition: all 100ms ease;
+      color: $medium-gray;
+      border-radius: 50%;
+      text-align: center;
+      margin-right: 5px;
+      font-size: 21px;
+      line-height: 0;
+      padding: 10px;
+      float: left;
+      height: 42px;
+      width: 42px;
+      
+      &:hover {
+        border-color: $dark-gray;
+        color: $dark-gray;
+      }
+    }
+    .badge {
+      margin-top: 10px;
+    }
+  }
+
+  .user-avatar {
+    border: 1px solid $light-gray;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+  }
+
+  .card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: $dark-gray;
+    font-size: 20px;
+    margin-bottom: 0;
+    line-height: 1.1em;
+  }
+
+  .card-subtitle {
+    font-size: 15px;
+    font-weight: 100;
+    margin-bottom: 10px;
+    a {
+      font-weight: normal;
+      color: inherit;
+    }
+  }
+
+  .details {
+    text-align: center;
+    color: $dark-gray;
+    
+    .details-item {
+      white-space: nowrap;
+      display: inline-block;
+      padding: 5px 20px;
+
+      .material-icons {
+        transform: translateY(5px);
+        opacity: 0.3;
+      }
+    }
+  }
+
+  .card-reveal {
+    .description {
+      color: $dark-gray;
+      font-size: 13px;
+    }
+    .chip {
+      font-size: 12px;
+      float: left;
+    }
+    .details {
+      padding-bottom: 5px;
+      background: #333;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+  }
+
+  // box shaddow effect
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  position: relative;       
+  
+  &:before,
+  &:after {
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    position: absolute; 
+    content: " ";
+    z-index: -1;
+    right: 10px;
+    left: 10px;
+    bottom: 0;
+    top: 50%;
+  } 
+  &:after {
+    transform: skew(8deg) rotate(3deg);
+    right: 10px; 
+    left: auto;
+  }
+}

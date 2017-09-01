@@ -1,0 +1,40 @@
+<div class="col s12 m6 l3">
+  <div class="card z-depth-0">
+    
+    <div class="card-content">
+      <img [src]="repository.owner.avatar_url" class="user-avatar" alt="">
+      <div class="card-title">{{ repository.name }}</div>
+      <div class="card-subtitle">por <a [routerLink]="'/'+ repository.owner.login">{{ repository.owner.login }}</a></div>
+      <div class="details">
+        <div class="details-item"><i class="material-icons">star_border</i> {{ repository.stargazers_count | number }}</div>
+        <div class="details-item"><i class="material-icons">error_outline</i> {{ repository.open_issues_count | number }}</div>
+        <div class="details-item"><i class="material-icons">remove_red_eye</i> {{ repository.watchers_count | number }}</div>
+      </div>
+    </div>
+    
+    <div class="card-action clearfix">
+      <span class="new badge right"
+            [style.backgroundColor]="'#' + stringToRGB(repository.language)"
+            [attr.data-badge-caption]="repository.language"></span>
+      <a href="javascript:void(0)" class="action-button activator"><i class="fa fa-info"></i></a>
+      <a [href]="repository.owner.html_url" target="_blank" class="action-button"><i class="fa fa-user"></i></a>
+      <a [href]="repository.html_url" target="_blank" class="action-button"><i class="fa fa-github"></i></a>
+      <a [href]="repository.homepage" *ngIf="repository.homepage" target="_blank" class="action-button"><i class="fa fa-link"></i></a>
+    </div>
+    
+    <div class="card-reveal">
+      <span class="card-title">{{ repository.full_name }} <i class="material-icons right">close</i></span>
+      <p class="description">{{ repository.description }}</p>
+      <span class="chip">Atualizado: {{repository.updated_at | date }}</span>
+      <span class="chip">Criado: {{repository.created_at | date }}</span>
+      <div class="details">
+        <div class="details-item"><i class="material-icons">star</i> {{ repository.stargazers_count | number }}</div>
+        <div class="details-item"><i class="material-icons">error_outline</i> {{ repository.open_issues_count | number }}</div>
+        <div class="details-item"><i class="material-icons">remove_red_eye</i> {{ repository.watchers_count | number }}</div>
+        <div class="details-item"><i class="fa fa-code-fork"></i> {{ repository.forks_count | number }}</div>
+        <div class="details-item"><i [class]="repository.private ? 'fa fa-lock' : 'fa fa-unlock'"></i> {{ repository.private ? 'Privado' : 'Público' }}</div>
+        <div class="details-item"><i class="fa fa-file-code-o"></i> {{ formatInMegabytes(repository.size) }}</div>
+      </div>
+    </div>
+  </div>
+</div>

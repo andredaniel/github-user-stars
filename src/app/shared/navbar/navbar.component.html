@@ -1,0 +1,60 @@
+<div class="navbar-fixed">
+  <nav class="blue-grey darken-3">
+    <div class="nav-wrapper container-fluid">
+      <div class="row">
+        <div class="col s3">
+          <a routerLink="/" class="brand-logo">
+            <i class="fa fa-github"></i> Github User Stars
+          </a>
+        </div>
+        <div class="col s5 search-wrapper">
+          <i class="fa fa-user"></i>
+          <input
+            type="text"
+            class="input-username"
+            (keyup.enter)="changeUsername(username.value)"
+            placeholder="Digite um nome de usuário"
+            #username>
+        </div>
+        <div class="col s4">
+          <button class="btn z-depth-0" (click)="changeUsername(username.value)">Stars</button>
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a class="dropdown-button" href="#!" data-activates="sort-dropdown">
+                <i class="material-icons left">sort</i> Ordem de Listagem
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="progress blue-grey">
+      <div class="determinate" [style.width.%]="updateApiRemainingPercentage()">
+        <div
+          class="remaining"
+          [class.start]="updateApiRemainingPercentage() <= 5"
+          [class.end]="updateApiRemainingPercentage() >= 95"
+        >
+            <span>{{ updateApiRemainingPercentage() }}% restantes</span>
+            <span *ngIf="api.rate !== undefined">Renova às {{ api.rate.reset * 1000 | date: 'shortTime' }}</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- sort -->
+<ul id="sort-dropdown" class="dropdown-content">
+  <li [class.active]="sortListBy === 'name'">
+    <a (click)="changeSortListBy('name')"><i class="material-icons">sort_by_alpha</i>Alfabética</a>
+  </li>
+  <li [class.active]="sortListBy === 'stargazers_count'">
+    <a (click)="changeSortListBy('stargazers_count')"><i class="material-icons">star_border</i>Stars</a>
+  </li>
+  <li [class.active]="sortListBy === 'open_issues_count'">
+    <a (click)="changeSortListBy('open_issues_count')"><i class="material-icons">error_outline</i>Issues</a>
+  </li>
+  <li [class.active]="sortListBy === 'watchers_count'">
+    <a (click)="changeSortListBy('watchers_count')"><i class="material-icons">remove_red_eye</i>Watchers</a>
+  </li>
+</ul>

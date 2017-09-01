@@ -1,0 +1,5 @@
+<div class="user-info">
+  <img [src]="user.avatar_url" class="avatar" [alt]="user.name">
+  <h2 class="title">{{ user.name || user.login }}</h2>
+  <div class="location">{{ user.location || user.company || user.email }}</div>
+</div>

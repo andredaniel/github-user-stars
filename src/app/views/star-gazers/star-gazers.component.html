@@ -1,0 +1,38 @@
+<app-navbar
+  [(sortListBy)]="selectedOrder"
+  [username]="inputUsername"
+  (usernameChange)="loadUserRoute($event)"
+  [api]="apiRatingLimit"
+>
+</app-navbar>
+<div class="container-fluid cards" [class.noCards]="repositories.length === 0 && ! userExists()">
+  <div class="row">
+    <user-info [user]="user" *ngIf="userExists()"></user-info>
+
+    <div class="alert" *ngIf="repositories.length === 0 && userExists()">
+      <h2 class="error-message"><i class="fa fa-bug fa-3x"></i> Este usuário ainda não tem repositórios.</h2>
+    </div>
+  
+    <div class="filters" *ngIf="languages.length > 0">
+      <!-- toggle all -->
+      <div class="filter-item">
+        <input id="toggle_all" type="checkbox" [checked]="toggleAllLanguagesState" (change)="toggleAllLanguages()">
+        <label for="toggle_all"><i class="material-icons left">filter_list</i> Tudo</label>
+      </div>  
+      <!-- languages -->
+      <div class="filter-item" *ngFor="let key of languages | keys">
+        <input [id]="'item_' + key" type="checkbox" [checked]="languages[key].selected" (change)="toggleLanguage(key)">
+        <label [for]="'item_' + key">{{ languages[key].name }}</label>
+      </div>
+    </div>
+
+    <div class="col s12" *ngIf="repositories.length > 0">
+      <p>Exibindo {{ filterRepositories().length }} repositórios de {{ repositories.length }}.</p>
+    </div>
+
+    <card-repository
+      *ngFor="let repository of filterRepositories() | orderBy : selectedOrder : selectedOrder == 'name' ? 'asc' : 'desc'"
+      [repository]="repository">
+    </card-repository>
+  </div>
+</div>
