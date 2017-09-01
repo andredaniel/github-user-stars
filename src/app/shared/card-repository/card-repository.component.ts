@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+declare var $;
+
 @Component({
   selector: 'card-repository',
   templateUrl: './card-repository.component.html',
@@ -8,25 +10,16 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardRepositoryComponent implements OnInit {
   
   @Input() repository;
+  @Input() languageColor;
   
   constructor() { }
   
-  ngOnInit() {}
-  
-  stringToRGB(str){
-    if(str === null) return 'CACACA';
-
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    var c = (hash & 0x00FFFFFF)
-      .toString(16)
-      .toUpperCase();
-    
-    return "00000".substring(0, 6 - c.length) + c;
-  }
+  ngOnInit() {
+    $('.tooltipped').tooltip({
+      position:'top',
+      delay: 50
+    });
+}
 
   formatInMegabytes(number){
     number = number / 1024;

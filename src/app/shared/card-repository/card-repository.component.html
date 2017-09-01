@@ -1,4 +1,4 @@
-<div class="col s12 m6 l3">
+<div class="col s12 m6 l4 xl3">
   <div class="card z-depth-0">
     
     <div class="card-content">
@@ -14,16 +14,36 @@
     
     <div class="card-action clearfix">
       <span class="new badge right"
-            [style.backgroundColor]="'#' + stringToRGB(repository.language)"
+            [style.backgroundColor]="languageColor"
             [attr.data-badge-caption]="repository.language"></span>
-      <a href="javascript:void(0)" class="action-button activator"><i class="fa fa-info"></i></a>
-      <a [href]="repository.owner.html_url" target="_blank" class="action-button"><i class="fa fa-user"></i></a>
-      <a [href]="repository.html_url" target="_blank" class="action-button"><i class="fa fa-github"></i></a>
-      <a [href]="repository.homepage" *ngIf="repository.homepage" target="_blank" class="action-button"><i class="fa fa-link"></i></a>
+      <a
+        href="javascript:void(0)"
+        class="action-button tooltipped activator"
+        data-tooltip="Informações"
+      ><i class="fa fa-info"></i></a>
+      <a
+        [href]="repository.owner.html_url"
+        target="_blank"
+        class="action-button tooltipped"
+        data-tooltip="Perfil"
+      ><i class="fa fa-user"></i></a>
+      <a
+        [href]="repository.html_url"
+        target="_blank"
+        class="action-button tooltipped"
+        data-tooltip="Repositório"
+      ><i class="fa fa-github"></i></a>
+      <a
+        [href]="repository.homepage" *ngIf="repository.homepage"
+        target="_blank"
+        class="action-button tooltipped"
+        data-tooltip="Site"
+      ><i class="fa fa-link"></i></a>
     </div>
     
     <div class="card-reveal">
-      <span class="card-title">{{ repository.full_name }} <i class="material-icons right">close</i></span>
+      <i class="material-icons icon-close">close</i>
+      <span class="card-title">{{ repository.full_name }}</span>
       <p class="description">{{ repository.description }}</p>
       <span class="chip">Atualizado: {{repository.updated_at | date }}</span>
       <span class="chip">Criado: {{repository.created_at | date }}</span>

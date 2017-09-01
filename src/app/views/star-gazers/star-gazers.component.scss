@@ -10,18 +10,29 @@
   bottom: 0;
   right: 0;
   left: 0;
+
+  @media #{$small-and-down} {
+    padding: 10px;
+    top: 61px;
+  }
   
   &.noCards {
     background-image: url('../../../assets/images/card-illustration.svg');
     background-size: 500px;
     background-repeat: no-repeat;
     background-position: center;
+
+    @media #{$small-and-down} {
+      background-size: 300px;
+    }
   }
 }
 
 .filters {
   text-align: center;
-  
+  @media #{$small-and-down} {
+    margin: 0 -10px;
+  }
   .filter-item {
     display: inline-block;
     label {
@@ -32,6 +43,12 @@
       padding: 2px 15px;
       color: #fff;
       margin: 5px;
+      
+      @media #{$small-and-down} {
+        line-height: 1.8em;
+        font-size: 0.9em;
+        margin: 3px;
+      }
 
       &:hover {
         background-color: $dark-gray;
@@ -75,4 +92,9 @@
     display: block;
     font-weight: 100;
   }
+}
+
+.section-preloader {
+  text-align: center;
+  padding: 50px 0;
 }

@@ -15,9 +15,9 @@ import { StarGazersComponent } from './views/star-gazers/star-gazers.component';
 
 // routing
 import { AppRoutingModule } from './app-routing.module';
-import { OrderByPipe } from './pipes/order-by.pipe';
 
 // Pipes
+import { OrderByPipe } from './pipes/order-by.pipe';
 import { KeysPipe } from './pipes/keys.pipe';
 
 @NgModule({

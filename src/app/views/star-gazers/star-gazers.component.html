@@ -5,15 +5,14 @@
   [api]="apiRatingLimit"
 >
 </app-navbar>
-<div class="container-fluid cards" [class.noCards]="repositories.length === 0 && ! userExists()">
+<div class="container-fluid cards" [class.noCards]="repositories.length === 0 && ! userExists()" (scroll)="onScroll($event)">
   <div class="row">
     <user-info [user]="user" *ngIf="userExists()"></user-info>
 
     <div class="alert" *ngIf="repositories.length === 0 && userExists()">
-      <h2 class="error-message"><i class="fa fa-bug fa-3x"></i> Este usuário ainda não tem repositórios.</h2>
+      <h2 class="error-message"><i class="fa fa-bug fa-3x"></i> Este usuário não tem repositórios favoritos.</h2>
     </div>
-  
-    <div class="filters" *ngIf="languages.length > 0">
+    <div class="filters" *ngIf="repositories.length > 0">
       <!-- toggle all -->
       <div class="filter-item">
         <input id="toggle_all" type="checkbox" [checked]="toggleAllLanguagesState" (change)="toggleAllLanguages()">
@@ -21,18 +20,34 @@
       </div>  
       <!-- languages -->
       <div class="filter-item" *ngFor="let key of languages | keys">
-        <input [id]="'item_' + key" type="checkbox" [checked]="languages[key].selected" (change)="toggleLanguage(key)">
-        <label [for]="'item_' + key">{{ languages[key].name }}</label>
+        <input [id]="'item_' + key" type="checkbox" [checked]="languages[key]" (change)="toggleLanguage(key)">
+        <label [for]="'item_' + key">{{ key }}</label>
       </div>
     </div>
 
     <div class="col s12" *ngIf="repositories.length > 0">
-      <p>Exibindo {{ filterRepositories().length }} repositórios de {{ repositories.length }}.</p>
+      <p>Exibindo {{ filteredRepositories.length }} repositórios de {{ repositories.length }}</p>
     </div>
 
     <card-repository
-      *ngFor="let repository of filterRepositories() | orderBy : selectedOrder : selectedOrder == 'name' ? 'asc' : 'desc'"
+      *ngFor="let repository of filteredRepositories | orderBy : selectedOrder : selectedOrder == 'name' ? 'asc' : 'desc'"
+      [languageColor]="languageColors[repository.language]"
       [repository]="repository">
     </card-repository>
+
+    <div class="col s12 section-preloader" *ngIf="isFetchingMoreStars || nothingToLoad">
+      <div class="preloader-wrapper small active" *ngIf="!nothingToLoad">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="nothingToLoad">Acabou! 😎</div>
+    </div>
   </div>
 </div>

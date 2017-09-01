@@ -7,7 +7,10 @@
   }
 
   .card-action {
+    white-space: nowrap;
     clear: both;
+    padding-left: 10px;
+    padding-right: 10px;
 
     a.action-button {
       border: 1px solid $medium-gray;
@@ -16,12 +19,19 @@
       border-radius: 50%;
       text-align: center;
       margin-right: 5px;
-      font-size: 21px;
+      font-size: 18px;
       line-height: 0;
-      padding: 10px;
+      padding: 9px;
+      height: 35px;
+      width: 35px;
       float: left;
-      height: 42px;
-      width: 42px;
+      
+      @media #{$large-and-up} {
+        font-size: 21px;
+        padding: 10px;
+        height: 42px;
+        width: 42px;
+      }
       
       &:hover {
         border-color: $dark-gray;
@@ -55,19 +65,23 @@
     font-weight: 100;
     margin-bottom: 10px;
     a {
+      text-decoration: underline;
       font-weight: normal;
       color: inherit;
     }
   }
 
   .details {
+    white-space: nowrap;
     text-align: center;
     color: $dark-gray;
-    
+    margin-left: -25px;
+    margin-right: -25px;
+
     .details-item {
       white-space: nowrap;
       display: inline-block;
-      padding: 5px 20px;
+      padding: 5px 15px;
 
       .material-icons {
         transform: translateY(5px);
@@ -77,18 +91,26 @@
   }
 
   .card-reveal {
+    .icon-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
     .description {
       color: $dark-gray;
       font-size: 13px;
     }
     .chip {
-      font-size: 12px;
+      font-size: 11px;
       float: left;
     }
     .details {
       padding-bottom: 5px;
       background: #333;
       position: absolute;
+      white-space: normal;
+      margin-right: 0;
+      margin-left: 0;
       bottom: 0;
       right: 0;
       left: 0;

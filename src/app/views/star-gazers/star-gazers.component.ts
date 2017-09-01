@@ -1,7 +1,11 @@
-import { Component, OnInit, Pipe } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Pipe, HostListener, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import githubUsernameRegex from 'github-username-regex';
+import { DOCUMENT } from "@angular/platform-browser";
+import { HttpClient } from '@angular/common/http';
+
+// language colors
+import { LanguageColors } from '../../json/language-colors';
 
 declare var Materialize:any;
 declare var $;
@@ -15,11 +19,14 @@ declare var $;
 export class StarGazersComponent implements OnInit {
   
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
     private router: Router
   ) {}
-  
+
+  public languageColors = LanguageColors;
+  public responsesPerRequest : number = 30;
   public selectedOrder = 'open_issues';
   public inputUsername = '';
   public user : any = [];
@@ -28,13 +35,16 @@ export class StarGazersComponent implements OnInit {
   public languages : any = [];
   public apiRatingLimit : any = [];
   public catchBadResponse : any = [];
+  public currentPage : number = 1;
+  public nothingToLoad = false;
 
   userExists() {
     return this.user.login !== undefined;
   }
-  
+
   populateLanguages() {
 
+    this.languages = {};
     let tempLanguages = [];
 
     this.repositories.forEach(repository => {
@@ -44,10 +54,7 @@ export class StarGazersComponent implements OnInit {
 
       if(languageIndex < 0) {
         tempLanguages.push(currentLanguage);
-        this.languages.push({
-          name: currentLanguage,
-          selected: true
-        });
+        this.languages[currentLanguage] = true;
       }
     });
   }
@@ -55,46 +62,32 @@ export class StarGazersComponent implements OnInit {
   toggleAllLanguagesState = true;
 
   toggleAllLanguages() {
-
     let languages = [];
     this.toggleAllLanguagesState = ! this.toggleAllLanguagesState;
-
-    this.languages.forEach((language, key) => {
-      let item = {
-        name: language.name,
-        selected: this.toggleAllLanguagesState
-      }
-      languages.push(item);
-    });
-
+    for (var key in this.languages) {
+      languages[key] = this.toggleAllLanguagesState;
+    }
     this.languages = languages;
+    this.filterRepositories();
   }
 
   toggleLanguage(index) {
-    this.languages[index].selected = ! this.languages[index].selected;
+    this.languages[index] = ! this.languages[index];
+    this.filterRepositories();
   }
 
   filterRepositories() {
 
-    let repositories = [],
-        languages = [];
-
-    this.languages.forEach(language => {
-      if(language.selected){
-        languages.push(language.name);
-      }
-    });
+    let repositories = [];
 
     this.repositories.forEach(repository => {
-      let currentLanguage = repository.language != null ? repository.language : 'Outras',
-          index = languages.indexOf(currentLanguage);
-      if(index >= 0) {
+      let currentLanguage = repository.language != null ? repository.language : 'Outras';
+      if(this.languages[currentLanguage]) {
         repositories.push(repository);
       }
     });
 
     this.filteredRepositories = repositories;
-    return this.filteredRepositories;
   }
 
   loadUserRoute(username: string): any {
@@ -131,15 +124,26 @@ export class StarGazersComponent implements OnInit {
     );
   }
 
-  fetchStars(username: string): any {
-
-    this.languages = [];
-
-    this.http.get('https://api.github.com/users/' + username + '/starred')
+  fetchStars(username: string, page: number = 1): any {
+    this.http.get('https://api.github.com/users/' + username + '/starred?page=' + page)
     .subscribe(
       response => {
-        this.repositories = response;
+
+        let length = JSON.parse(JSON.stringify(response)).length;
+        if(length === 0) {
+          this.nothingToLoad = true;
+          return;
+        }
+
+        if(page > 1) {
+          this.repositories = this.repositories.concat(response);
+          this.isFetchingMoreStars = false;
+        } else {
+          this.repositories = response;
+          this.nothingToLoad = false;
+        }
         this.populateLanguages();
+        this.filterRepositories();
       },
       error =>  {
         console.log(error);
@@ -147,10 +151,34 @@ export class StarGazersComponent implements OnInit {
       }
     );
     
-    // fatch api rating limits
+    // fetch api rating limits
     this.fetchApiRatingLimits();
   }
-  
+
+  fetchMoreStars() {
+    this.currentPage++;
+    let page = this.currentPage;
+    this.fetchStars(this.user.login, page);
+  }
+
+  private isFetchingMoreStars = false;
+  @HostListener('scroll', ['$event'])
+  private onScroll($event:Event):void {
+
+    let pos = $event.srcElement.scrollTop + $event.srcElement.clientHeight,
+        max = $event.srcElement.scrollHeight,
+        offset = 100;
+
+    if(
+      pos > max - offset
+      && ! this.isFetchingMoreStars
+      && (this.repositories.length === 0 || this.repositories.length >= this.responsesPerRequest)
+    ) {
+      this.isFetchingMoreStars = true;
+      this.fetchMoreStars();
+    }
+  }
+
   fetchApiRatingLimits() {
     this.http.get('https://api.github.com/rate_limit')
     .subscribe(
@@ -182,5 +210,4 @@ export class StarGazersComponent implements OnInit {
     this.fetchApiRatingLimits();
     $('.dropdown-button').dropdown();
   }
-  
 }

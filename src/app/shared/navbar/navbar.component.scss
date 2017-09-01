@@ -5,15 +5,35 @@
   nav {
     padding-right: 35px;
     padding-left: 20px;
+
+    @media #{$small-and-down} {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
   }
   
   .brand-logo {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 16px;
+
+    @media #{$medium-and-down} {
+      left: 0;
+      transform: translateX(0);
+    }
+
+    span {
+      @media #{$medium-and-down} {
+        display: none;
+      }
+    }
     
     i.fa {
       font-size: 2em;
+
+      @media #{$small-and-down} {
+        line-height: 1.7em;
+      }
     }
   }
   .search-wrapper {
@@ -23,6 +43,10 @@
       position: absolute;
       margin-left: 20px;
       opacity: 0.2;
+      @media #{$small-and-down} {
+        padding-top: 20px;
+        margin-left: 13px;
+      }
     }
     
     .input-username {
@@ -31,6 +55,12 @@
       border-radius: 2px;
       text-align: center;
       margin: 0;
+      @media #{$small-and-down} {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+        padding-left: 30px;
+      }
       &:focus {
         border-bottom: none;
         box-shadow: none;
@@ -40,6 +70,9 @@
   
   .btn {
     height: 44px;
+    @media #{$small-and-down} {
+      padding: 0 0.8rem;
+    }
   }
   .progress {
     position: absolute;
