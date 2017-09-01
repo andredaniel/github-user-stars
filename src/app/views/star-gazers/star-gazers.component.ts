@@ -161,9 +161,9 @@ export class StarGazersComponent implements OnInit {
     this.fetchStars(this.user.login, page);
   }
 
-  private isFetchingMoreStars = false;
+  public isFetchingMoreStars = false;
   @HostListener('scroll', ['$event'])
-  private onScroll($event:Event):void {
+  onScroll($event:Event):void {
 
     let pos = $event.srcElement.scrollTop + $event.srcElement.clientHeight,
         max = $event.srcElement.scrollHeight,
