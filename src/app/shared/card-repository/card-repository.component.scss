@@ -25,6 +25,7 @@
       height: 35px;
       width: 35px;
       float: left;
+      position: relative;
       
       @media #{$large-and-up} {
         font-size: 21px;
@@ -32,10 +33,44 @@
         height: 42px;
         width: 42px;
       }
+
+      .link-title {
+        position: absolute;
+        background-color: black;
+        color: $medium-gray;
+        line-height: normal;
+        text-transform: none;
+        padding: 3px 10px;
+        border-radius: 3px;
+        font-size: 14px;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%) translateY(5px);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 300ms ease, transform 300ms ease;
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          transform: rotate(45deg) translateX(-50%);
+          bottom: -5px;
+          left: 50%;
+          z-index: -1;
+          background: black;
+        }
+      }
       
       &:hover {
         border-color: $dark-gray;
         color: $dark-gray;
+
+        .link-title {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
       }
     }
     .badge {

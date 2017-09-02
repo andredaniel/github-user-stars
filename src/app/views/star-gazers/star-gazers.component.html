@@ -35,19 +35,21 @@
       [repository]="repository">
     </card-repository>
 
-    <div class="col s12 section-preloader" *ngIf="isFetchingMoreStars || nothingToLoad">
-      <div class="preloader-wrapper small active" *ngIf="!nothingToLoad">
-        <div class="spinner-layer spinner-green-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
+    <div class="col s12">
+      <div class="section-preloader">
+        <div class="preloader-wrapper small" [class.active]="isFetchingMoreStars">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
           </div>
         </div>
+        <div *ngIf="nothingToLoad">Acabou! 😎</div>
       </div>
-      <div *ngIf="nothingToLoad">Acabou! 😎</div>
     </div>
   </div>
 </div>

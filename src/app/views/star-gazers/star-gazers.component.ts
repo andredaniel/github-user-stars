@@ -101,8 +101,9 @@ export class StarGazersComponent implements OnInit {
         this.user = response;
         this.fetchStars(username);
       },
-      error =>  {
+      error => {
 
+        this.filteredRepositories = [];
         this.repositories = [];
         this.languages = [];
         this.user = [];

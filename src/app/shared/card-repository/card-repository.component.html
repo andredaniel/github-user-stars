@@ -13,37 +13,34 @@
     </div>
     
     <div class="card-action clearfix">
-      <span class="new badge right"
-            [style.backgroundColor]="languageColor"
-            [attr.data-badge-caption]="repository.language"></span>
-      <a
-        href="javascript:void(0)"
-        class="action-button tooltipped activator"
-        data-tooltip="Informações"
-      ><i class="fa fa-info"></i></a>
-      <a
-        [href]="repository.owner.html_url"
-        target="_blank"
-        class="action-button tooltipped"
-        data-tooltip="Perfil"
-      ><i class="fa fa-user"></i></a>
-      <a
-        [href]="repository.html_url"
-        target="_blank"
-        class="action-button tooltipped"
-        data-tooltip="Repositório"
-      ><i class="fa fa-github"></i></a>
-      <a
-        [href]="repository.homepage" *ngIf="repository.homepage"
-        target="_blank"
-        class="action-button tooltipped"
-        data-tooltip="Site"
-      ><i class="fa fa-link"></i></a>
+      <span
+        class="new badge right"
+        [style.backgroundColor]="languageColor"
+        [attr.data-badge-caption]="repository.language">
+      </span>
+      <a href="javascript:void(0)" class="action-button activator">
+        <i class="fa fa-info"></i>
+        <span class="link-title">Informações</span>
+      </a>
+      <a [href]="repository.owner.html_url" target="_blank" class="action-button">
+        <i class="fa fa-user"></i>
+        <span class="link-title">Perfil</span>
+      </a>
+      <a [href]="repository.html_url" target="_blank" class="action-button">
+        <i class="fa fa-github"></i>
+        <span class="link-title">Repositório</span>
+      </a>
+      <a [href]="repository.homepage" target="_blank" class="action-button" *ngIf="repository.homepage">
+        <i class="fa fa-link"></i>
+        <span class="link-title">Site</span>
+      </a>
     </div>
     
     <div class="card-reveal">
-      <i class="material-icons icon-close">close</i>
-      <span class="card-title">{{ repository.full_name }}</span>
+      <span class="card-title">
+        {{ repository.full_name }}
+        <i class="material-icons icon-close">close</i>
+      </span>
       <p class="description">{{ repository.description }}</p>
       <span class="chip">Atualizado: {{repository.updated_at | date }}</span>
       <span class="chip">Criado: {{repository.created_at | date }}</span>
@@ -53,7 +50,7 @@
         <div class="details-item"><i class="material-icons">remove_red_eye</i> {{ repository.watchers_count | number }}</div>
         <div class="details-item"><i class="fa fa-code-fork"></i> {{ repository.forks_count | number }}</div>
         <div class="details-item"><i [class]="repository.private ? 'fa fa-lock' : 'fa fa-unlock'"></i> {{ repository.private ? 'Privado' : 'Público' }}</div>
-        <div class="details-item"><i class="fa fa-file-code-o"></i> {{ formatInMegabytes(repository.size) }}</div>
+        <div class="details-item"><i class="fa fa-file-code-o"></i> {{ (repository.size / 1024).toFixed(2) + ' MB' }}</div>
       </div>
     </div>
   </div>
