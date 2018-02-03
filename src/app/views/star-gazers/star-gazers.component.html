@@ -16,7 +16,7 @@
       <!-- toggle all -->
       <div class="filter-item">
         <input id="toggle_all" type="checkbox" [checked]="toggleAllLanguagesState" (change)="toggleAllLanguages()">
-        <label for="toggle_all"><i class="material-icons left">filter_list</i> Tudo</label>
+        <label for="toggle_all"><i class="material-icons left">filter_list</i> {{ toggleAllLanguagesState ? 'Nenhuma': 'Todas' }}</label>
       </div>  
       <!-- languages -->
       <div class="filter-item" *ngFor="let key of languages | keys">
@@ -37,7 +37,7 @@
 
     <div class="col s12">
       <div class="section-preloader">
-        <div class="preloader-wrapper small" [class.active]="isFetchingMoreStars">
+        <div class="preloader-wrapper small" [class.active]="isFetchingMoreStars && ! nothingToLoad">
           <div class="spinner-layer spinner-green-only">
             <div class="circle-clipper left">
               <div class="circle"></div>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 // materialize
 import { MaterializeModule } from "angular2-materialize";
@@ -34,7 +34,7 @@ import { KeysPipe } from './pipes/keys.pipe';
     BrowserModule,
     MaterializeModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
